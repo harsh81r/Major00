@@ -7,7 +7,9 @@ export default defineConfig({
   plugins: [
 
     react(),
-    commonjs()
+    commonjs({
+      include: [/node_modules/]
+    })
   ],
   server: {
     host: true
