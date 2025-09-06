@@ -1,0 +1,410 @@
+/* Global styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Modern, clean font */
+    background-color: #121212; /* Darker base background */
+    color: #e0e0e0; /* Default light text color */
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll on body */
+}
+
+/* You might want to import fonts from Google Fonts in index.html <head> */
+
+.homePageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    height: 100vh;
+    overflow: hidden;
+    position: relative; /* For stacking content above video */
+    z-index: 1; /* Ensure content is above the video */
+}
+
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    background-size: cover;
+    object-fit: cover;
+    will-change: transform; /* Hint for smoother animations */
+    transform: translateZ(0); /* Promote to GPU layer */
+}
+
+.formWrapper {
+    background: linear-gradient(145deg, #2a2d3e, #1a1b26); /* Subtle gradient */
+    padding: 30px; /* More padding */
+    border-radius: 15px; /* More rounded corners */
+    width: 450px; /* Slightly wider */
+    max-width: 95%; /* Better mobile fit */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle light border */
+    animation: fadeIn 0.8s ease-out; /* Fade in animation */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+}
+
+footer a {
+    color: #4aee88;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.mainLabel {
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.homePageLogo {
+    height: 80px;
+    margin-bottom: 30px;
+}
+
+.inputBox {
+    padding: 15px; /* More generous padding */
+    border-radius: 8px; /* Consistent rounded corners */
+    outline: none;
+    border: 1px solid #3a3c4e; /* Subtle border */
+    margin-bottom: 15px;
+    background: #1a1b26; /* Darker input background */
+    color: #f8f8f2; /* Light text for dark background */
+    font-size: 16px;
+    font-weight: 500;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions */
+}
+
+.inputBox:focus {
+    border-color: #6c5ce7; /* Highlight on focus */
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.3); /* Soft glow */
+}
+
+.btn {
+    background: #6c5ce7; /* A modern purple */
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px; /* Slightly more rounded corners */
+    font-size: 16px;
+    font-weight: 600; /* Medium bold */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.btn:hover {
+    background: #5a4dbb; /* Darker purple on hover */
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.btn:active {
+    transform: translateY(0); /* Press effect */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Reduced shadow on click */
+}
+
+.joinBtn,
+.leaveBtn {
+    /* Specific styles for join/leave buttons, overriding .btn defaults if needed */
+    background: #2ecc71; /* A friendly green */
+    width: auto; /* Allow content to determine width */
+    margin: 0; /* Remove default margins */
+}
+
+.joinBtn:hover,
+.leaveBtn:hover {
+    background: #27ae60; /* Darker green on hover */
+}
+
+.copyBtn {
+    background: #3498db; /* A clear blue for copy */
+}
+
+.copyBtn:hover {
+    background: #2980b9; /* Darker blue on hover */
+}
+
+.createInfo {
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.createNewBtn {
+    color: #4aed88;
+    text-decoration: none;
+    border-bottom: 1px solid #4aed88;
+    transition: all 0.3s ease-in-out;
+}
+
+.createNewBtn:hover,
+footer a:hover {
+    color: #368654;
+    border-color: #368654;
+}
+
+.mainWrap {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* Wider aside for more content */
+    height: 100vh;
+    background-color: #1a1b26; /* Darker background for the main area */
+}
+
+.aside {
+    background: #282a36; /* Slightly lighter dark for aside */
+    padding: 20px;
+    color: #f8f8f2; /* Lighter text color */
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #3a3c4e; /* Subtle separator */
+}
+
+.aside h3 {
+    color: #00cec9; /* A vibrant color for the heading */
+    font-size: 1.3em;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 0 0 8px rgba(0, 206, 201, 0.5); /* Soft glow */
+}
+
+.asideInner {
+    flex: 1;
+    padding-top: 20px; /* Space above connected clients */
+}
+
+.clientsList {
+    display: flex;
+    flex-wrap: wrap; /* Allow clients to wrap */
+    gap: 15px; /* Consistent spacing */
+    padding: 15px 0;
+    max-height: calc(100vh - 250px); /* Limit height and enable scroll */
+    overflow-y: auto;
+}
+
+.client {
+    position: relative; /* For pseudo-elements */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 500; /* Medium font weight */
+    padding: 10px;
+    background: #3a3c4e; /* Darker background for each client */
+    border-radius: 8px; /* Consistent rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Softer shadow */
+    flex-basis: calc(50% - 7.5px);
+    text-align: center;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* Smooth transition for all changes */
+}
+
+.client:hover {
+    transform: translateY(-5px) scale(1.05); /* More pronounced lift and enlarge */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+    z-index: 1; /* Bring to front on hover */
+}
+
+.client::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 10px; /* Border radius slightly larger than client */
+    background: linear-gradient(45deg, #6c5ce7, #00cec9, #ff7675);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.client:hover::before {
+    opacity: 1;
+    filter: blur(5px); /* Soft glow effect */
+}
+
+.userName {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #bbbbbb;
+}
+
+.logo {
+    border-bottom: 1px solid #3a3c4e; /* Matches new border color */
+    padding-bottom: 15px;
+    margin-bottom: 15px; /* Space below the logo */
+}
+
+.logoImage {
+    height: 70px; /* Slightly larger logo */
+    display: block;
+    margin: 0 auto; /* Center the logo */
+}
+
+.leaveBtn {
+    width: 100%;
+    margin-top: 20px;
+}
+.CodeMirror {
+    min-height: calc(100vh - 20px);
+    font-size: 20px;
+    line-height: 1.6;
+    padding-top: 20px;
+}
+
+.asideButtons {
+    margin-top: auto;
+    padding: 15px 0;
+    border-top: 1px solid #3a3c4e; /* Separator above buttons */
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+@media screen and (min-width: 769px) {
+    .asideButtons {
+        margin-top: auto; /* Pushes the buttons to the bottom of the aside */
+        display: flex;
+        gap: 10px; /* Space between the buttons */
+        padding: 10px;
+    }
+
+    .aside .copyBtn, .aside .leaveBtn {
+        width: auto; /* Override 100% width for desktop */
+        flex-grow: 1; /* Distribute available space equally */
+        margin-top: 0; /* Remove top margin for desktop */
+    }
+
+    .aside .leaveBtn {
+        margin-left: 0; /* Reset mobile margin */
+        margin-right: 0; /* Reset mobile margin */
+    }
+
+    .aside .copyBtn {
+        margin-left: 0; /* Reset mobile margin */
+        margin-right: 0; /* Reset mobile margin */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mainWrap {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        justify-content: flex-start; /* Align items to the start for stacking */
+        align-items: center; /* Center horizontally */
+    }
+
+    .aside {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        padding: 15px;
+        border-right: none;
+        border-bottom: 1px solid #3a3c4e;
+        flex-direction: column; /* Stack logo, client list, and buttons vertically */
+        align-items: center; /* Center content horizontally */
+        gap: 15px; /* Space between elements in aside */
+    }
+
+    .asideInner {
+        display: flex; /* Make client list visible again */
+        flex-direction: column; /* Stack its content (Connected title and clientList) */
+        width: 100%; /* Take full width within aside */
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .clientsList {
+        flex-wrap: wrap; /* Allow clients to wrap to multiple rows */
+        justify-content: center; /* Center clients in the list */
+        gap: 8px; /* Reduced gap for more compact display */
+        padding: 0 5px; /* Small horizontal padding */
+    }
+
+    .client {
+        flex-basis: calc(33.33% - 10px); /* Three clients per row with 10px gap */
+        min-width: unset; /* Remove min-width override if any */
+        margin: 0; /* Ensure no extra margin from other rules */
+        padding: 8px; /* Slightly reduced padding for mobile clients */
+        font-size: 0.85em;
+    }
+
+    .userName {
+        font-size: 0.75em;
+    }
+
+    .logo {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .logoImage {
+        height: 60px;
+    }
+
+    .asideButtons {
+        margin-top: 0;
+        padding: 10px;
+        border-top: none;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .aside .copyBtn, .aside .leaveBtn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .editorwrap {
+        flex: 1;
+        width: 100%;
+        height: calc(100vh - var(--aside-height, 250px)); /* Adjust height, assuming `aside` is now larger to include the client list */
+        min-height: 50vh; /* Ensure a minimum height for the editor on mobile */
+    }
+
+    .CodeMirror {
+        min-height: 50vh; /* Set a consistent minimum height for the editor */
+        font-size: 16px; /* Adjust font size for mobile readability */
+        padding-top: 10px; /* Reduce padding for mobile */
+    }
+
+    .btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+}
+
+@media screen and (min-width: 340px) and (max-width: 750px) {
+    .editorwrap {
+        width: 100%;
+        min-height: 50vh;
+        overflow-x: auto; /* Allow horizontal scrolling if content overflows */
+    }
+    .CodeMirror {
+        width: 100%;
+        min-height: 50vh;
+        font-size: 16px;
+    }
+}
+
+html, body {
+    overflow: hidden;
+}
