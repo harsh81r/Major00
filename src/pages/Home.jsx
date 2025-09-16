@@ -1,10 +1,12 @@
 // import React from 'react'
-import { useState} from 'react';
-import{v4 as uuidV4} from 'uuid';
-// import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react'; // Import useEffect
+// import { useState} from 'react';
+// import{v4 as uuidV4} from 'uuid';
+// // import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { useEffect } from 'react'; // Import useEffect
+import React, { useState, useEffect } from "react";
+import { v4 as uuidV4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 
 
 function Home() {
@@ -28,7 +30,7 @@ function Home() {
     e.preventDefault();
     const id=uuidV4();
     setRoomId(id)
-    toast.success("Created a New Room");
+    // console.log("Created a New Room"); // Commented out toast for new room
     // console.log(id);
     
 
@@ -37,7 +39,7 @@ function Home() {
   
 const joinRoom = () =>{
   if(!roomId||!username){
-    toast.error('Room id and username is required!')
+    // console.error('Room id and username is required!'); // Commented out toast for error
     return;
 
   }

@@ -3,7 +3,6 @@ import {BrowserRouter,Routes,Route} from'react-router-dom'
 import Home from"./pages/Home.jsx"
 import EditorPage from'./pages/EditorPage.jsx'
 import './App.css';
-import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -11,14 +10,6 @@ function App() {
 <>
 
 
-<div><Toaster position='top-right' toastOptions={{
-  success:{
-    theme:{
-      primary:"#4aed88",
-    }
-  }
-}}></Toaster>
-</div>
 <BrowserRouter>
 <Routes>
 <Route path='/' element={<Home/>}/>

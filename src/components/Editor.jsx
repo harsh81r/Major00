@@ -1,17 +1,11 @@
 
 
 import React, { useEffect, useRef } from 'react'
-import Codemirror from 'codemirror';
-import "codemirror/lib/codemirror.css"
-import 'codemirror/theme/dracula.css';
-import'codemirror/mode/javascript/javascript';
-// import ACTIONS from '../../../Actions.js'
+import { EditorView, basicSetup } from 'codemirror'
+import { EditorState } from '@codemirror/state'
+import { javascript } from '@codemirror/lang-javascript'
+import { oneDark } from '@codemirror/theme-one-dark'
 import ACTIONS from '../Actions';
-// import'codemirror/addon/edit/closeTags'
-import "codemirror/addon/edit/closebrackets"
-import "codemirror/addon/hint/show-hint";
-import "codemirror/addon/hint/show-hint.css";
-import "codemirror/addon/hint/javascript-hint";
 
 
 function Editor({socketRef,roomId,onCodeChange}) {
@@ -19,45 +13,63 @@ function Editor({socketRef,roomId,onCodeChange}) {
 
   useEffect(()=>{
     async function init(){
-      editorRef.current = Codemirror.fromTextArea(document.getElementById('realtimeEditor'),{
-mode:{name:'javascript',json:true},
-theme:'dracula',
-autoCloseBrackets:true,
-lineNumbers:true,
-extraKeys: { "Ctrl-Space": "autocomplete" },
+      const startState = EditorState.create({
+        doc: "function (){\n  console.log('Editor goes here...');\n}",
+        extensions: [
+          basicSetup,
+          javascript(),
+          oneDark,
+          EditorView.updateListener.of((update) => {
+            if (update.docChanged) {
+              const code = update.state.doc.toString();
+              onCodeChange(code);
+              if (socketRef.current) {
+                socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+                  roomId,
+                  code,
+                });
+              }
+            }
+          })
+        ]
+      });
 
-
-    });
-
-    editorRef.current.on('change', (instance, changes) => {
-        const { origin } = changes;
-        const code = instance.getValue();
-        onCodeChange(code);
-        if (origin !== 'setValue') {
-            socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-                roomId,
-                code,
-            });
-        }
-    });
+      editorRef.current = new EditorView({
+        state: startState,
+        parent: document.getElementById('realtimeEditor')
+      });
     }
     init();
     return () => {
-      editorRef.current.toTextArea();
+      if (editorRef.current) {
+        editorRef.current.destroy();
+      }
     }
   },[])
 
   useEffect(() => {
-    if (socketRef.current) {
+    if (socketRef.current && editorRef.current) {
         socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
             if (code !== null) {
-                editorRef.current.setValue(code);
+                editorRef.current.dispatch({
+                    changes: {
+                        from: 0,
+                        to: editorRef.current.state.doc.length,
+                        insert: code
+                    }
+                });
             }
         });
 
         socketRef.current.on(ACTIONS.SYNC_CODE, ({ code }) => {
             if (code !== null) {
-                editorRef.current.setValue(code);
+                editorRef.current.dispatch({
+                    changes: {
+                        from: 0,
+                        to: editorRef.current.state.doc.length,
+                        insert: code
+                    }
+                });
             }
         });
     }
@@ -70,13 +82,7 @@ extraKeys: { "Ctrl-Space": "autocomplete" },
     };
 }, [socketRef.current]);
   return (
-       <textarea
-      id="realtimeEditor"
-      defaultValue=" function (){
-      console.log('Editor goes here...');
-      }"
-    />
-    
+    <div id="realtimeEditor" style={{ height: '100%', width: '100%' }}></div>
   )
 }
 

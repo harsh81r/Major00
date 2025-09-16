@@ -1,10 +1,10 @@
 
 
 import React, { useState, useRef, useEffect } from 'react';
-import toast from 'react-hot-toast';
 import ACTIONS from '../Actions';
 import Client from '../components/Client';
-import Editor from '../components/Editor';
+// import Editor from '../components/Editor';
+import Editor from '../components/editor';
 import { initSocket } from '../socket';
 import {
     useLocation,
@@ -30,7 +30,6 @@ const EditorPage = () => {
 
             function handleErrors(e) {
                 console.log('socket error', e);
-                toast.error('Socket connection failed, try again later.');
                 reactNavigator('/');
             }
 
@@ -44,7 +43,6 @@ const EditorPage = () => {
                 ACTIONS.JOINED,
                 ({ clients, username, socketId }) => {
                     if (username !== location.state?.username) {
-                        // toast.success(`${username} joined the room.`);
                         console.log(`${username} joined`);
                     }
                     setClients(clients);
@@ -59,7 +57,6 @@ const EditorPage = () => {
             socketRef.current.on(
                 ACTIONS.DISCONNECTED,
                 ({ socketId, username }) => {
-                    toast.success(`${username} left the room.`);
                     setClients((prev) => {
                         return prev.filter(
                             (client) => client.socketId !== socketId
@@ -79,9 +76,7 @@ const EditorPage = () => {
     async function copyRoomId() {
         try {
             await navigator.clipboard.writeText(roomId);
-            toast.success('Room ID has been copied to your clipboard');
         } catch (err) {
-            toast.error('Could not copy the Room ID');
             console.error(err);
         }
     }
