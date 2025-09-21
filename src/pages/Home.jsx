@@ -1,118 +1,90 @@
-// import React from 'react'
-// import { useState} from 'react';
-// import{v4 as uuidV4} from 'uuid';
-// // import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { useEffect } from 'react'; // Import useEffect
-import React, { useState, useEffect } from "react";
-import { v4 as uuidV4 } from "uuid";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { v4 as uuidV4 } from 'uuid';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
+const Home = () => {
+    const navigate = useNavigate();
 
-function Home() {
+    const [roomId, setRoomId] = useState('');
+    const [username, setUsername] = useState('');
 
-  const navigate =useNavigate();
-  
+    const createNewRoom = (e) => {
+        e.preventDefault();
+        const id = uuidV4();
+        setRoomId(id);
+        toast.success('Created a new room');
+    };
 
-  const [roomId,setRoomId]=useState('');
-  const[username,setUserName]=useState('');
+    const joinRoom = () => {
+        if (!roomId || !username) {
+            toast.error('ROOM ID & username is required');
+            return;
+        }
 
-  // Effect to set video playback rate
-  useEffect(() => {
-    const video = document.getElementById('background-video');
-    if (video) {
-      video.playbackRate = 0.5; // Set speed to half
-    }
-  }, []); // Empty dependency array means this runs once on mount
+        // Redirect
+        navigate(`/editor/${roomId}`, {
+            state: {
+                username,
+            },
+        });
+    };
 
+    const handleInputEnter = (e) => {
+        if (e.code === 'Enter') {
+            joinRoom();
+        }
+    };
 
-  const createNewRoom=(e)=>{
-    e.preventDefault();
-    const id=uuidV4();
-    setRoomId(id)
-    // console.log("Created a New Room"); // Commented out toast for new room
-    // console.log(id);
-    
+    return (
+        <div className="homePageWrapper">
+            <div className="formWrapper">
+                <img
+                    className="homePageLogo"
+                    src="/code-sync.png"
+                    alt="code-sync-logo"
+                />
+                <h4 className="mainLabel">Paste invitation ROOM ID</h4>
+                <div className="inputGroup">
+                    <input
+                        type="text"
+                        className="inputBox"
+                        placeholder="ROOM ID"
+                        onChange={(e) => setRoomId(e.target.value)}
+                        value={roomId}
+                        onKeyUp={handleInputEnter}
+                    />
+                    <input
+                        type="text"
+                        className="inputBox"
+                        placeholder="USERNAME"
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                        onKeyUp={handleInputEnter}
+                    />
+                    <button className="btn joinBtn" onClick={joinRoom}>
+                        Join
+                    </button>
+                    <span className="createInfo">
+                        If you don't have an invite then create &nbsp;
+                        <a
+                            onClick={createNewRoom}
+                            href=""
+                            className="createNewBtn"
+                        >
+                            new room
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <footer>
+                <h4>
+                    Built with 💛 &nbsp; by &nbsp;
+                    <a href="https://github.com/codersgyan">Coder's Gyan</a>
+                </h4>
+            </footer>
+        </div>
+    );
+};
 
-
-  }
-  
-const joinRoom = () =>{
-  if(!roomId||!username){
-    // console.error('Room id and username is required!'); // Commented out toast for error
-    return;
-
-  }
-
-
-  //navigate redireact to the room
-
-  navigate(`/Editor/${
-    roomId
-  }`,{
-    state:{
-    username,
-    }})
-
-
-
-}
-
-const handleInputEnter=(e)=>{
-
-  // console.log('event',e.code);
-  if(e.code ==='Enter'){
-
-    joinRoom();
-
-
-  }
-
-}
-
-  
-  return (
-
-    <div className="homePageWrapper">
-      <video autoPlay loop muted id="background-video" className="home-background-video">
-        <source src="https://videos.pexels.com/video-files/3129576/3129576-hd_1920_1080_30fps.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div className="formWrapper">
-<img src='/critic00.png' alt="logo" className="homePageLogo"/>
-<h4 className="mainLabel"> Paste invitation ROOM ID
-
-
-</h4>
-
-<div className="inputGroup">
-  <input type="text " placeholder="ROOM ID" value={roomId} onChange={(e)=>{setRoomId(e.target.value)}}  onKeyUp={handleInputEnter} className="inputBox"/>
-
- <input type="text " placeholder="USERNAME"  value={username} onChange={(e)=>{setUserName(e.target.value)}} onKeyUp={handleInputEnter} className="inputBox"/>
-
- <button className="btn joinBtn" onClick={joinRoom}>
-Join
- </button>
- <span className="createInfo">
-  if you don't have an invite then create &nbsp;
-  <a onClick={createNewRoom} href="" className="createNewBtn">
-    newroom
-  </a>
- </span>
-
-      </div>
-      </div>
-
-
-    <footer><h4> Build with &nbsp;by &nbsp;<a href="https://github.com/harsh81r">
-
-
-      Harsh khare</a></h4></footer>
-
-    </div>
-
-
-  )
-}
-
-export default Home
+export default Home;

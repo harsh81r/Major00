@@ -1,24 +1,14 @@
-import {io} from 'socket.io-client';
+import { io } from 'socket.io-client';
 
-export const initSocket =async ()=>{
-    const options={
-        'force new connection':true,
-        reconnectionAttempt:"Infinity",
-        timeout:10000,
-        transports:['websocket'],
-    }
+const initSocket = async () => {
+    const options = {
+        'force new connection': true,
+        reconnectionAttempts: 'Infinity',
+        timeout: 10000,
+        transports: ['websocket'],
+    };
 
-    return io (import.meta.env.VITE_APP_BACKEND_URL,options)
-}
+    return io(process.env.REACT_APP_SERVER_URL || 'http://localhost:5001', options);
+};
 
-
-
-
-
-
-// import { io } from "socket.io-client";
-
-// const socket = io()
-
-
-// export default socket;
+export default initSocket;
