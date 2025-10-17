@@ -1,0 +1,32 @@
+services:
+  # Backend Service
+  - type: web
+    name: smartbrowser-backend
+    env: node
+    plan: free
+    buildCommand: cd Backend && npm install
+    startCommand: cd Backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        value: https://major00realtime.vercel.app
+      - key: HOST
+        value: 0.0.0.0
+    healthCheckPath: /
+    
+  # Frontend Service (Static Site)
+  - type: web
+    name: smartbrowser-frontend
+    env: static
+    buildCommand: cd Frontend/smartbrowser && npm install && npm run build
+    staticPublishPath: Frontend/smartbrowser/dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        value: https://smartbrowser-backend.onrender.com  # Update this with your actual backend URL
+
+
+
+

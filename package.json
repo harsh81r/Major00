@@ -1,0 +1,35 @@
+{
+  "name": "critic-collaborative-editor",
+  "version": "1.0.0",
+  "description": "Real-time collaborative code editor with role-based access, discussion forum, and terminal code execution",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd Backend && npm run dev",
+    "dev:frontend": "cd Frontend/smartbrowser && npm run dev",
+    "build": "cd Frontend/smartbrowser && npm run build",
+    "start": "cd Backend && npm start",
+    "install:all": "npm install && cd Backend && npm install && cd ../Frontend/smartbrowser && npm install",
+    "build:frontend": "cd Frontend/smartbrowser && npm run build",
+    "preview": "cd Frontend/smartbrowser && npm run preview"
+  },
+  "keywords": [
+    "collaborative-editor",
+    "real-time",
+    "code-editor",
+    "socket.io",
+    "react",
+    "node.js",
+    "terminal",
+    "discussion-forum"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
